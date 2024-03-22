@@ -9,3 +9,7 @@ body,
   background-color: black;
   color-scheme: dark;
 }
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
