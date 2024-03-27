@@ -6,6 +6,11 @@ import { HiHome } from "react-icons/hi";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { twMerge } from "tailwind-merge";
 import Button from "./ui/Button";
+import useAuthModal from "@/hooks/useAuthModal";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useUser } from "@/hooks/useUser";
+import { FaUserAlt } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -14,9 +19,21 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ children, className }) => {
   const router = useRouter();
+  const authModal = useAuthModal();
 
-  const handleLogout = () => {
-    //handle logout
+  const supabaseClient = useSupabaseClient();
+  const { user, subscription } = useUser();
+
+  const handleLogout = async () => {
+    const { error } = await supabaseClient.auth.signOut();
+
+    router.refresh();
+
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success("Logged out!");
+    }
   };
   return (
     <div
@@ -68,33 +85,44 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
         </div>
 
         <div className="flex justify-between gap-x-4 items-center">
-          <React.Fragment>
-            <div>
-              <Button
-                onClick={() => {}}
-                className="
+          {user ? (
+            <div className="flex gap-x-4 justify-center items-center">
+              <Button onClick={handleLogout} className="bg-white px-6 py-2">
+                Logout
+              </Button>
+              <Button onClick={() => router.push("/account")} className="bg-white">
+                <FaUserAlt />
+              </Button>
+            </div>
+          ) : (
+            <React.Fragment>
+              <div>
+                <Button
+                  onClick={authModal.onOpen}
+                  className="
                    bg-transparent
                    text-neutral-300
                    font-medium
                    "
-              >
-                Sign Up
-              </Button>
-            </div>
+                >
+                  Sign Up
+                </Button>
+              </div>
 
-            <div>
-              <Button
-                onClick={() => {}}
-                className="
+              <div>
+                <Button
+                  onClick={authModal.onOpen}
+                  className="
                    bg-white
                     px-6
                     py-2
                    "
-              >
-                Log in
-              </Button>
-            </div>
-          </React.Fragment>
+                >
+                  Log in
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
         </div>
       </div>
       {children}
