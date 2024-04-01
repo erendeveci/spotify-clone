@@ -3,7 +3,7 @@ import { FieldErrors } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  errors: FieldErrors;
+  errors?: FieldErrors;
   id: string;
 }
 
@@ -30,7 +30,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ className, type, disab
         disabled:cursor-pointer-not-allowed
         disabled:opacity-50
         focus:outline-none
-        ${errors[id] && "border-red-300"}
+        ${errors?.[id] ? "border-red-300" : ""}
         `,
         className
       )}

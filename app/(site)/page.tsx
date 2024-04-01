@@ -3,8 +3,6 @@ import Header from "@/components/Header";
 import ListItem from "@/components/ListItem/ListItem";
 import PageContent from "@/components/PageContent/PageContent";
 
-export const revalidate = 0;
-
 export default async function Home() {
   const songs = await getSongs();
 
