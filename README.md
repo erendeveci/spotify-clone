@@ -1,4 +1,8 @@
-# Spotify Clone
+<h1 style="text-align:center;">
+    <a href="https://spotify-clone-lyart-pi.vercel.app/" target="_blank" style="text-align:center; display: inline-block;">
+        Spotify Clone
+    </a>
+</h1>
 
 This project is a clone of the Spotify web application built using React, Supabase, PostgreSQL, Tailwind CSS, and Next.js.
 
