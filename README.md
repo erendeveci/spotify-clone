@@ -1,4 +1,4 @@
-<h1 style="text-align:center;">
+<h1 align="center">
     <a href="https://spotify-clone-lyart-pi.vercel.app/" target="_blank" style="text-align:center; display: inline-block;">
         Spotify Clone
     </a>
